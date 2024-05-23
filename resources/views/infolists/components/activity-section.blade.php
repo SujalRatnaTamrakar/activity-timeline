@@ -72,19 +72,6 @@
                     </div>
                 </div>
             @endforeach
-
-            <div x-show="totalShowItemsCount < childItemsCount">
-                @php
-                    $icon = $getShowItemsIcon();
-                    $label = $getShowItemsLabel();
-                    $color = $getShowItemsColor();
-                @endphp
-                <x-filament::link x-on:click="totalShowItemsCount += showItemsCount" :icon="$icon" :color="$color"
-                    class="ms-1.5 cursor-pointer hover:underline">
-                    {{ $label }}
-                </x-filament::link>
-            </div>
-
         </div>
     @else
         <x-activity-timeline::empty-state :description="$getEmptyStateDescription()" :heading="$getEmptyStateHeading()" :icon="$getEmptyStateIcon()" />

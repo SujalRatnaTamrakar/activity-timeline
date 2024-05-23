@@ -3,6 +3,7 @@
 namespace JaOcero\ActivityTimeline\Concerns;
 
 use Filament\Infolists\Infolist;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -106,23 +107,21 @@ trait HasSetting
             ->columns(1);
     }
 
-    protected function getActivites(): \Illuminate\Database\Eloquent\Collection
+    protected function getActivites(): LengthAwarePaginator
     {
         $activityModelClass = config('activitylog.activity_model');
         $activityModel = new $activityModelClass;
-
         return $activityModel::query()
             ->with(['causer', 'subject'])
             ->where('subject_id', $this->record->id)
             ->where('subject_type', get_class($this->record))
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate($this->configuration()['activity_section']['show_items_count']);
     }
 
     private function getActivityLogRecord(): Collection
     {
-        $activities = $this->getActivites();
-
+        $activities = collect($this->getActivites()->items());
         $activities->transform(function ($activity) {
 
             $activity->activityData = [
