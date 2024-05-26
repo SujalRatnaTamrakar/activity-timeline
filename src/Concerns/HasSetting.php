@@ -21,7 +21,7 @@ trait HasSetting
             'activity_section' => [
                 'label' => 'Activities',
                 'description' => 'These are the activities that have been recorded.',
-                'show_items_count' => 0,
+                'show_items_count' => 10,
                 'show_items_label' => 'Show more',
                 'show_items_icon' => 'heroicon-o-chevron-right',
                 'show_items_color' => 'gray',
